@@ -13,6 +13,22 @@
 
 ---
 
+## 📱 App Screenshots
+
+<div align="center">
+
+| Home | Scan | Garden |
+|:---:|:---:|:---:|
+| <img src="./public/images/screen-home.jpg" width="180" alt="Home"/> | <img src="./public/images/screen-scan.jpg" width="180" alt="Scan"/> | <img src="./public/images/screen-garden.jpg" width="180" alt="Garden"/> |
+
+| Market | Impact | Waste Tracker |
+|:---:|:---:|:---:|
+| <img src="./public/images/screen-market.jpg" width="180" alt="Market"/> | <img src="./public/images/screen-impact.jpg" width="180" alt="Impact"/> | <img src="./public/images/screen-waste.jpg" width="180" alt="Waste Tracker"/> |
+
+</div>
+
+---
+
 ## 🧩 Problem Statement
 
 **Value Addition to Rural Waste for Better Waste Management**
@@ -28,26 +44,16 @@ LeafWrap transforms agricultural waste into **smart, seed-embedded biodegradable
 ### The App + QR Ecosystem
 
 <div align="center">
-  <img src="./public/images/app-qr-ecosystem.jpg" alt="LeafWrap App + QR Ecosystem — Scan, Trace, Engage & Reward" width="860" />
-  <br/><sub><em>Each LeafWrap unit carries a unique QR code — scan to verify, trace the agricultural waste source, and earn eco-rewards</em></sub>
+  <img src="./public/images/app-qr-ecosystem.jpg" alt="LeafWrap App + QR Ecosystem" width="800" />
+  <br/><sub><em>Scan & Verify → Trace the agricultural waste source → Engage & Earn Eco Credits</em></sub>
 </div>
-
-**The 3-step consumer journey:**
-
-| Step | Action | What Happens |
-|:---:|---|---|
-| 01 | **Scan & Verify** | QR connects the physical package to its digital record |
-| 02 | **Trace** | Discover the agricultural waste source and material journey |
-| 03 | **Engage & Reward** | Plant it in soil, track growth, earn & redeem Eco Credits |
 
 ---
 
 ## 🏭 How the Product is Made
 
-LeafWrap packaging starts on the farm as waste and ends in the earth as soil — here's the full journey from raw residue to finished prototype:
-
 <div align="center">
-  <img src="./public/images/product-development-process.jpg" alt="How the Product is Developed — Raw Material to Prototype" width="860" />
+  <img src="./public/images/product-development-process.jpg" alt="How the Product is Developed" width="800" />
   <br/><sub><em>Raw Material → Material Preparation → Dry & Optimise → Measure → Heat-Press Moulding → Prototype</em></sub>
 </div>
 
@@ -62,24 +68,20 @@ LeafWrap packaging starts on the farm as waste and ends in the earth as soil —
 
 ## 🧪 Prototype Evidence
 
-Nine validated prototypes — from large biodegradable containers down to small cups — all made from rural agricultural waste.
-
 <div align="center">
-  <img src="./public/images/prototypes-collection.jpg" alt="LeafWrap Prototype Collection" width="600" />
+  <img src="./public/images/prototypes-collection.jpg" alt="Prototype Collection" width="500" />
   <br/><br/>
-  <img src="./public/images/prototype-evidence-pricing.jpg" alt="Prototype Evidence & Product Pricing Table" width="860" />
-  <br/><sub><em>Prototype catalogue (A1–C4) with dimensions, weight, and competitive pricing (₹0.75–₹15 per unit)</em></sub>
+  <img src="./public/images/prototype-evidence-pricing.jpg" alt="Prototype Evidence & Pricing" width="800" />
+  <br/><sub><em>All 9 prototypes (A1–C4) with real dimensions & competitive pricing (₹0.75–₹15 per unit)</em></sub>
 </div>
 
 ---
 
 ## 🌱 From Packaging to Soil
 
-The end-of-life of every LeafWrap unit is designed to be a beginning — the package biodegrades and seeds germinate:
-
 <div align="center">
-  <img src="./public/images/packaging-to-soil.jpg" alt="From Packaging to Soil — Biodegradation & Plant Emergence" width="860" />
-  <br/><sub><em>Placed in Soil → Exposed to Moisture → Breakdown Observed → Growth Ecosystem (plant emergence)</em></sub>
+  <img src="./public/images/packaging-to-soil.jpg" alt="From Packaging to Soil" width="800" />
+  <br/><sub><em>Placed in Soil → Exposed to Moisture → Breakdown Observed → Plant Emergence</em></sub>
 </div>
 
 ---
@@ -87,43 +89,22 @@ The end-of-life of every LeafWrap unit is designed to be a beginning — the pac
 ## 💰 Business Model
 
 <div align="center">
-  <img src="./public/images/cost-revenue-model.jpg" alt="Cost Breakdown & Revenue Model — LeafWrap Business Outlook" width="860" />
+  <img src="./public/images/cost-revenue-model.jpg" alt="Cost Breakdown & Revenue Model" width="800" />
   <br/><sub><em>Cost per unit ≈ ₹0.75–1 &nbsp;|&nbsp; Selling price ₹1–2 &nbsp;|&nbsp; Profit margin ~50–100%</em></sub>
 </div>
-
-**Revenue flow:**
-- Raw materials sourced from farmers at ₹1–2/kg (or free of cost)
-- Binding agents: starch, xanthan, gum acacia (₹50–70/kg)
-- Machinery: one-time ₹2–4 Lakhs
-- **B2B sales** to QSRs, events, institutions — bulk orders & customisation
-- **Impact:** Reduce agricultural waste · Lower carbon footprint · Create green business value
 
 ---
 
 ## ✨ App Features
 
-### 🔑 Core Features
 | Feature | Description |
 |---|---|
-| **QR Code Scanner** | Scan seed-embedded packaging to verify authenticity & earn credits |
-| **Eco Credits System** | Earn and spend credits for every eco action |
-| **Plant Growth Tracker** | Follow your packaging seed from soil to harvest across 4 stages |
-| **Eco Market** | Browse & buy products made from rural agricultural waste |
-| **CO₂ Impact Dashboard** | Live carbon savings tracker with real-world equivalents |
-
-### 🆕 Additional Features (Added by She Innovates)
-
-#### ♻️ Waste Tracker *(New Page)*
-- Log rural waste diverted or composted by type (agricultural residue, plastic, organic, textile, e-waste)
-- Earn Eco Credits per kg of waste logged
-- Track processing status: Processed / Composted / Recycled
-- Running totals: total kg diverted, rupee value created, credits earned
-
-#### 🌍 Enhanced Impact Dashboard
-- Stubble burn prevention calculator
-- Waste material composition breakdown with visual progress bars
-- Achievement milestones: First Scan → Eco Champion
-- Equivalent metrics: car travel avoided (km), tree-year equivalents
+| **🏠 Home Dashboard** | Live Eco Credits, CO₂ saved, packs scanned, plants grown |
+| **📦 QR Scanner** | Enter serial code → verify packaging → earn Eco Credits instantly |
+| **🌱 Plant Garden** | 4-stage growth tracker (Seed → Sprout → Young Plant → Flourishing) |
+| **🛒 Eco Market** | All 9 prototypes (A1–C4) with real photos, pricing & cart |
+| **🌍 Impact Dashboard** | 3D Earth globe, CO₂ charts, burn prevention calculator, milestones |
+| **♻️ Waste Tracker** | Log rural waste by type, earn credits per kg, track value created |
 
 ---
 
@@ -131,32 +112,24 @@ The end-of-life of every LeafWrap unit is designed to be a beginning — the pac
 
 | Technology | Purpose |
 |---|---|
-| **React 18** | UI framework with hooks |
+| **React 18** | UI framework |
 | **Vite 6** | Build tool & dev server |
 | **TailwindCSS 3** | Utility-first styling |
 | **React Router v6** | Client-side navigation |
-| **Lucide React** | Icon library |
-| **Context API** | Global state (Eco Credits, CO₂, waste log) |
-| **Netlify** | Hosting & continuous deployment |
+| **Lucide React** | Icons |
+| **Context API** | Global state |
+| **Netlify** | Hosting & CI/CD |
 
 ---
 
 ## 🚀 Getting Started
 
 ```bash
-# Clone the repository
 git clone https://github.com/tahiyatarannum09/Sheinnovates.git
 cd Sheinnovates
-
-# Install dependencies
 npm install
-
-# Start development server
-npm run dev
-# → http://localhost:5173
-
-# Build for production
-npm run build
+npm run dev        # → http://localhost:5173
+npm run build      # Production build
 ```
 
 ---
@@ -165,24 +138,17 @@ npm run build
 
 ```
 Sheinnovates/
-├── public/images/                    # All PPT & prototype screenshots
-│   ├── app-qr-ecosystem.jpg          # LeafWrap App flow diagram
-│   ├── product-development-process.jpg
-│   ├── prototypes-collection.jpg
-│   ├── prototype-evidence-pricing.jpg
-│   ├── packaging-to-soil.jpg
-│   ├── cost-revenue-model.jpg
-│   └── problem-statement.jpg
+├── public/images/          # App screenshots + PPT photos
 ├── src/
-│   ├── contexts/EcoContext.jsx       # Global state
-│   ├── components/ui/BottomNav.jsx   # Bottom navigation
+│   ├── contexts/           # Global state (EcoContext)
+│   ├── components/ui/      # BottomNav, LeafWrapLogo
 │   └── pages/
-│       ├── HomePage.jsx              # Dashboard
-│       ├── ScanPage.jsx              # QR scanner
-│       ├── GardenPage.jsx            # Plant tracker
-│       ├── MarketPage.jsx            # Eco store
-│       ├── ImpactPage.jsx            # CO₂ dashboard
-│       └── WasteTrackerPage.jsx      # 🆕 Waste logging
+│       ├── HomePage.jsx
+│       ├── ScanPage.jsx
+│       ├── GardenPage.jsx
+│       ├── MarketPage.jsx
+│       ├── ImpactPage.jsx
+│       └── WasteTrackerPage.jsx  🆕
 ├── netlify.toml
 └── package.json
 ```
@@ -191,7 +157,7 @@ Sheinnovates/
 
 ## 👩‍💻 Team — She Innovates
 
-> *Built with 💚 at the She Innovates Hackathon 2026 · Problem Statement #8: Value Addition to Rural Waste*
+> *Built with 💚 at the She Innovates Hackathon 2026 · Problem Statement #8*
 
 ---
 
