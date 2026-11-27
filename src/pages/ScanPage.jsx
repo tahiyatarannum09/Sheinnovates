@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { useEco } from '../contexts/EcoContext'
 import { CheckCircle2, AlertCircle, Award, Leaf, ChevronRight, Sparkles } from 'lucide-react'
-import LeafWrapLogo from '../components/ui/AgriLoopLogo'
+import AgriLoopLogo from '../components/ui/AgriLoopLogo'
 
 const SAMPLE_CODES = {
   'AL-2026-INIT01': { name: 'Bagasse Courier Box',       material: 'Sugarcane Bagasse 30%',        seed: 'Basil',      credits: 25, co2: 1.2, emoji: '🌾' },
@@ -51,7 +51,7 @@ export default function ScanPage() {
       <div className="relative overflow-hidden bg-gradient-to-br from-[#1a1a2e] via-[#16213e] to-[#0f3460] px-5 pt-10 pb-6">
         <div className="absolute -top-8 -right-8 w-40 h-40 bg-blue-400/15 rounded-full blur-3xl" />
         <div className="flex items-center gap-3 mb-3">
-          <LeafWrapLogo size={30} />
+          <AgriLoopLogo size={30} />
           <div>
             <h1 className="font-display text-2xl font-black text-white leading-none">Scan Pack</h1>
             <p className="text-blue-200 text-xs mt-0.5">Verify packaging & earn Eco Credits</p>

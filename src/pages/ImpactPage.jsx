@@ -1,6 +1,6 @@
 import { useEco } from '../contexts/EcoContext'
 import { Flame, Award, Car, Leaf } from 'lucide-react'
-import LeafWrapLogo from '../components/ui/AgriLoopLogo'
+import AgriLoopLogo from '../components/ui/AgriLoopLogo'
 
 const milestones = [
   { label: 'First Scan',   emoji: '📦', achieved: true  },
@@ -78,7 +78,7 @@ export default function ImpactPage() {
         <div className="absolute -top-10 -right-10 w-48 h-48 bg-blue-400/10 rounded-full blur-3xl" />
 
         <div className="flex items-center gap-3 mb-2">
-          <LeafWrapLogo size={30} />
+          <AgriLoopLogo size={30} />
           <div>
             <h1 className="font-display text-2xl font-black text-white leading-none">Your Impact</h1>
             <p className="text-blue-200 text-xs mt-0.5">Real-world environmental difference</p>
@@ -132,7 +132,7 @@ export default function ImpactPage() {
             <p className="font-display font-black text-5xl text-orange-500 mb-1">{burnPrevented}<span className="text-2xl"> kg</span></p>
             <p className="text-sm text-gray-400">of crop residue diverted from burning</p>
             <div className="mt-3 bg-orange-50 rounded-2xl p-3 text-xs text-orange-700 leading-relaxed">
-              Each LeafWrap unit prevents ~2.3 kg of agricultural waste from being burned, reducing PM2.5 pollution in rural areas.
+              Each AgriLoop unit prevents ~2.3 kg of agricultural waste from being burned, reducing PM2.5 pollution in rural areas.
             </div>
           </div>
         </div>
@@ -176,7 +176,7 @@ export default function ImpactPage() {
         <div className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-[#0f3528] to-[#1B4D3E] p-5 text-white">
           <div className="absolute inset-0 opacity-5" style={{ backgroundImage: 'radial-gradient(circle, white 1px, transparent 1px)', backgroundSize: '24px 24px' }} />
           <div className="flex items-center gap-2 mb-3">
-            <LeafWrapLogo size={24} />
+            <AgriLoopLogo size={24} />
             <p className="font-display font-bold text-sm text-green-200">Eco Summary</p>
           </div>
           <div className="grid grid-cols-2 gap-3 text-center relative">

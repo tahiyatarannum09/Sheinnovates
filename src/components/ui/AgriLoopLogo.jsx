@@ -52,3 +52,4 @@ export default function AgriLoopLogo({ size = 40, showText = false, className = 
     </div>
   )
 }
+

@@ -1,7 +1,7 @@
 import { useEco } from '../contexts/EcoContext'
 import { ArrowRight, Recycle, Sparkles } from 'lucide-react'
 import { Link } from 'react-router-dom'
-import LeafWrapLogo from '../components/ui/AgriLoopLogo'
+import AgriLoopLogo from '../components/ui/AgriLoopLogo'
 
 function Leaf3D() {
   return (
@@ -78,7 +78,7 @@ export default function HomePage() {
 
         {/* Logo + team */}
         <div className="relative flex items-center justify-between mb-4">
-          <LeafWrapLogo size={42} showText={true} />
+          <AgriLoopLogo size={42} showText={true} />
           <div className="flex items-center gap-1.5 bg-white/10 border border-white/20 rounded-full px-2.5 py-1">
             <Sparkles size={9} className="text-green-300" />
             <span className="text-[9px] font-bold tracking-widest uppercase text-green-200">She Innovates</span>

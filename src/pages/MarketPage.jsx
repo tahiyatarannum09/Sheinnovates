@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { useEco } from '../contexts/EcoContext'
 import { Award, CheckCircle2, ShoppingCart, Tag, Leaf, Package, ChevronDown, ChevronUp } from 'lucide-react'
-import LeafWrapLogo from '../components/ui/AgriLoopLogo'
+import AgriLoopLogo from '../components/ui/AgriLoopLogo'
 
 // Each product uses a unique crop (cropX%, cropY%) from real prototype photos:
 // biodegradable-bowls.jpg  → top-left=flat tray front | top-right=flat tray side | bottom=bowls on plate
@@ -155,7 +155,7 @@ export default function MarketPage() {
         </div>
 
         <div className="flex items-center gap-3 mb-2">
-          <LeafWrapLogo size={28} />
+          <AgriLoopLogo size={28} />
           <div>
             <h1 className="font-display text-xl font-black text-white leading-none">Eco Market 🛒</h1>
             <p className="text-amber-100 text-xs mt-0.5">Cost ≈ ₹0.75–1 · Margin ~50–100%</p>

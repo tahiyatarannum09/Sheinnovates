@@ -40,7 +40,7 @@ export default function GardenPage() {
   const addPlant = (e) => {
     e.preventDefault()
     if (!form.name) return
-    setPlants(ps => [...ps, { id: Date.now(), name: form.name, stage: 0, days: 0, health: 100, lastWatered: new Date().toISOString().slice(0,10), from: form.from || 'LeafWrap Package' }])
+    setPlants(ps => [...ps, { id: Date.now(), name: form.name, stage: 0, days: 0, health: 100, lastWatered: new Date().toISOString().slice(0,10), from: form.from || 'AgriLoop Package' }])
     recordPlant()
     setForm({ name: '', from: '' })
     setAdding(false)
@@ -146,7 +146,7 @@ export default function GardenPage() {
             <input value={form.name} onChange={e => setForm(f => ({ ...f, name: e.target.value }))}
               placeholder="Plant name (e.g. Coriander)" className="w-full bg-gray-50 border-2 border-gray-100 focus:border-[#1B4D3E] rounded-2xl px-4 py-3 text-sm mb-3 focus:outline-none transition-colors" />
             <input value={form.from} onChange={e => setForm(f => ({ ...f, from: e.target.value }))}
-              placeholder="LeafWrap package (optional)" className="w-full bg-gray-50 border-2 border-gray-100 focus:border-[#1B4D3E] rounded-2xl px-4 py-3 text-sm mb-4 focus:outline-none transition-colors" />
+              placeholder="AgriLoop package (optional)" className="w-full bg-gray-50 border-2 border-gray-100 focus:border-[#1B4D3E] rounded-2xl px-4 py-3 text-sm mb-4 focus:outline-none transition-colors" />
             <div className="flex gap-2">
               <button type="submit" className="flex-1 btn-primary">Plant It 🌱</button>
               <button type="button" onClick={() => setAdding(false)} className="flex-1 btn-secondary">Cancel</button>

@@ -1,6 +1,6 @@
 import { NavLink } from 'react-router-dom'
 import { Home, QrCode, Sprout, ShoppingBag, BarChart3, Recycle } from 'lucide-react'
-import LeafWrapLogo from './AgriLoopLogo'
+import AgriLoopLogo from './AgriLoopLogo'
 
 const tabs = [
   { to: '/',               icon: Home,        label: 'Home'   },
@@ -20,7 +20,7 @@ export default function BottomNav() {
           <NavLink to="/" end className="flex flex-col items-center px-1">
             {({ isActive }) => (
               <div className={`transition-all duration-200 ${isActive ? 'scale-110' : 'opacity-50 scale-90'}`}>
-                <LeafWrapLogo size={28} />
+                <AgriLoopLogo size={28} />
               </div>
             )}
           </NavLink>

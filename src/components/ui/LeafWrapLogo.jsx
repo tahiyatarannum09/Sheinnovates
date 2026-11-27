@@ -1,4 +1,4 @@
-export default function LeafWrapLogo({ size = 40, showText = false, className = '' }) {
+export default function AgriLoopLogo({ size = 40, showText = false, className = '' }) {
   return (
     <div className={`flex items-center gap-2.5 ${className}`}>
       <svg width={size} height={size} viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -42,7 +42,7 @@ export default function LeafWrapLogo({ size = 40, showText = false, className = 
       {showText && (
         <div className="flex flex-col leading-none">
           <span className="font-display font-black text-[#1B4D3E]" style={{ fontSize: size * 0.4 }}>
-            LeafWrap
+            AgriLoop
           </span>
           <span className="font-semibold text-green-500 tracking-widest uppercase" style={{ fontSize: size * 0.18 }}>
             Eco Packaging
