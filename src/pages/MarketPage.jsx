@@ -3,10 +3,10 @@ import { useEco } from '../contexts/EcoContext'
 import { Award, CheckCircle2, ShoppingCart, Tag, Leaf, Package, ChevronDown, ChevronUp } from 'lucide-react'
 import LeafWrapLogo from '../components/ui/LeafWrapLogo'
 
-// Real product photos mapped to series
-// A-series: flat trays visible in biodegradable-bowls.jpg (top portion)
-// B-series: bowls collection on glass table
-// C-series: prototype-evidence-pricing.jpg (bottom section shows C cups)
+// Each product uses a unique crop (cropX%, cropY%) from real prototype photos:
+// biodegradable-bowls.jpg  → top-left=flat tray front | top-right=flat tray side | bottom=bowls on plate
+// prototypes-collection.jpg → cups & bowls on glass table, cropped left/center/right
+// prototype-evidence-pricing.jpg → labeled A/B/C sections, different X% per cup
 const PRODUCTS = [
   {
     id: 'A1', name: 'Large Container A1',
@@ -15,7 +15,7 @@ const PRODUCTS = [
     material: 'Sugarcane bagasse + binding agents',
     desc: 'Flat tray-style container, ideal for food stalls & QSR. Compostable in 30–45 days.',
     img: '/images/biodegradable-bowls.jpg',
-    imgPos: 'object-top',
+    cropX: '25%', cropY: '12%',   // top-left: front-facing flat tray
     badge: 'Bestseller', badgeColor: 'bg-green-100 text-green-700', series: 'A',
   },
   {
@@ -25,7 +25,7 @@ const PRODUCTS = [
     material: 'Rice straw + starch binder',
     desc: 'Compact flat container. Fully home-compostable.',
     img: '/images/biodegradable-bowls.jpg',
-    imgPos: 'object-top',
+    cropX: '75%', cropY: '12%',   // top-right: side-angled flat tray
     badge: null, badgeColor: '', series: 'A',
   },
   {
@@ -35,7 +35,7 @@ const PRODUCTS = [
     material: 'Areca fronds + xanthan gum',
     desc: 'Deep bowl for street food & events. Biodegrades in soil.',
     img: '/images/prototypes-collection.jpg',
-    imgPos: 'object-center',
+    cropX: '12%', cropY: '45%',   // leftmost bowl on glass table
     badge: 'Eco Choice', badgeColor: 'bg-teal-100 text-teal-700', series: 'B',
   },
   {
@@ -45,7 +45,7 @@ const PRODUCTS = [
     material: 'Sugarcane bagasse + gum acacia',
     desc: 'Medium bowl for single-serve meals. Home-compostable.',
     img: '/images/prototypes-collection.jpg',
-    imgPos: 'object-center',
+    cropX: '48%', cropY: '38%',   // center-left bowl on glass table
     badge: null, badgeColor: '', series: 'B',
   },
   {
@@ -55,7 +55,7 @@ const PRODUCTS = [
     material: 'Rice straw + mycelium composite',
     desc: 'Small bowl prototype. Decomposes into nutrient-rich soil.',
     img: '/images/prototypes-collection.jpg',
-    imgPos: 'object-center',
+    cropX: '82%', cropY: '55%',   // rightmost bowl on glass table
     badge: 'New', badgeColor: 'bg-blue-100 text-blue-700', series: 'B',
   },
   {
@@ -65,7 +65,7 @@ const PRODUCTS = [
     material: 'Agricultural bran + starch',
     desc: 'Mini cup for condiments & chai. Breaks down in 30 days.',
     img: '/images/prototype-evidence-pricing.jpg',
-    imgPos: 'object-bottom',
+    cropX: '8%',  cropY: '88%',   // C-section bottom-left, first cup C1
     badge: 'Most Affordable', badgeColor: 'bg-amber-100 text-amber-700', series: 'C',
   },
   {
@@ -75,7 +75,7 @@ const PRODUCTS = [
     material: 'Paddy straw + binding agent',
     desc: 'Lightweight shot-size cup for sampling & events.',
     img: '/images/prototype-evidence-pricing.jpg',
-    imgPos: 'object-bottom',
+    cropX: '20%', cropY: '90%',   // C-section, second cup C2
     badge: null, badgeColor: '', series: 'C',
   },
   {
@@ -85,7 +85,7 @@ const PRODUCTS = [
     material: 'Corn residue + xanthan gum',
     desc: 'Corn waste-derived single-use cup — zero-burn circular model.',
     img: '/images/prototype-evidence-pricing.jpg',
-    imgPos: 'object-bottom',
+    cropX: '33%', cropY: '90%',   // C-section, third cup C3
     badge: null, badgeColor: '', series: 'C',
   },
   {
@@ -95,7 +95,7 @@ const PRODUCTS = [
     material: 'Mixed agricultural residues',
     desc: 'Multi-residue blend — most sustainable in the lineup.',
     img: '/images/prototype-evidence-pricing.jpg',
-    imgPos: 'object-bottom',
+    cropX: '46%', cropY: '90%',   // C-section, fourth cup C4
     badge: 'Eco Max', badgeColor: 'bg-green-100 text-green-700', series: 'C',
   },
 ]
@@ -218,13 +218,13 @@ export default function MarketPage() {
                 <div key={p.id} className="card overflow-hidden">
                   {/* Image + content row */}
                   <div className="flex items-stretch">
-                    {/* Real product photo */}
+                    {/* Real product photo — unique crop per product */}
                     <div className="w-28 flex-shrink-0 relative overflow-hidden">
                       <img
                         src={p.img}
                         alt={p.name}
-                        className={`w-full h-full object-cover ${p.imgPos}`}
-                        style={{ minHeight: '100px' }}
+                        className="w-full h-full object-cover"
+                        style={{ minHeight: '100px', objectPosition: `${p.cropX} ${p.cropY}` }}
                       />
                       {/* Series ID overlay */}
                       <div className="absolute top-2 left-2 bg-black/50 backdrop-blur-sm text-white text-[10px] font-black rounded-lg px-1.5 py-0.5">
