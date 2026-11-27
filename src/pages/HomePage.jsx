@@ -1,60 +1,69 @@
 import { useEco } from '../contexts/EcoContext'
-import { Leaf, QrCode, Sprout, TrendingUp, Recycle, Award } from 'lucide-react'
+import { Leaf, QrCode, Sprout, TrendingUp, Recycle, Award, ArrowRight, Sparkles } from 'lucide-react'
 import { Link } from 'react-router-dom'
 
 export default function HomePage() {
   const { ecoCredits, co2Saved, packagesScanned, plantsGrown } = useEco()
 
   const stats = [
-    { label: 'Eco Credits', value: ecoCredits, icon: Award, color: 'text-amber-600', bg: 'bg-amber-50' },
-    { label: 'CO₂ Saved (kg)', value: co2Saved, icon: TrendingUp, color: 'text-green-700', bg: 'bg-green-50' },
-    { label: 'Packs Scanned', value: packagesScanned, icon: QrCode, color: 'text-blue-700', bg: 'bg-blue-50' },
-    { label: 'Plants Grown', value: plantsGrown, icon: Sprout, color: 'text-emerald-700', bg: 'bg-emerald-50' },
+    { label: 'Eco Credits', value: ecoCredits, suffix: '', icon: '🪙', gradient: 'from-amber-400 to-orange-400', bg: 'bg-amber-50', text: 'text-amber-700' },
+    { label: 'CO₂ Saved', value: co2Saved, suffix: 'kg', icon: '🌍', gradient: 'from-blue-400 to-cyan-400', bg: 'bg-blue-50', text: 'text-blue-700' },
+    { label: 'Packs Scanned', value: packagesScanned, suffix: '', icon: '📦', gradient: 'from-violet-400 to-purple-400', bg: 'bg-violet-50', text: 'text-violet-700' },
+    { label: 'Plants Grown', value: plantsGrown, suffix: '', icon: '🌱', gradient: 'from-green-400 to-emerald-500', bg: 'bg-green-50', text: 'text-green-700' },
   ]
 
   const quickActions = [
-    { label: 'Scan Pack', to: '/scan', icon: QrCode, color: 'bg-[#1B4D3E] text-white' },
-    { label: 'My Garden', to: '/garden', icon: Sprout, color: 'bg-green-100 text-green-800' },
-    { label: 'Eco Market', to: '/market', icon: Recycle, color: 'bg-amber-100 text-amber-800' },
-    { label: 'Impact', to: '/impact', icon: TrendingUp, color: 'bg-blue-100 text-blue-800' },
+    { label: 'Scan Pack', desc: 'Earn credits', to: '/scan', icon: QrCode, color: 'bg-[#1B4D3E]', textColor: 'text-white', emoji: '📦' },
+    { label: 'My Garden', desc: 'Track plants', to: '/garden', icon: Sprout, color: 'bg-green-100', textColor: 'text-green-800', emoji: '🌿' },
+    { label: 'Eco Market', desc: 'Shop & redeem', to: '/market', icon: Recycle, color: 'bg-amber-100', textColor: 'text-amber-800', emoji: '🛒' },
+    { label: 'Impact', desc: 'Your footprint', to: '/impact', icon: TrendingUp, color: 'bg-blue-100', textColor: 'text-blue-800', emoji: '📊' },
   ]
 
   return (
-    <div className="min-h-screen">
+    <div className="min-h-screen bg-[#F4F7F4] page-enter">
       {/* Hero */}
-      <div className="bg-gradient-to-br from-[#1B4D3E] via-[#2d6b56] to-[#4CAF50] text-white px-5 pt-12 pb-8 relative overflow-hidden">
-        <div className="absolute inset-0 opacity-10">
-          {[...Array(6)].map((_, i) => (
-            <Leaf key={i} className={`absolute text-white w-16 h-16`}
-              style={{ top: `${10 + i * 15}%`, left: `${i % 2 === 0 ? 70 + i * 3 : -5 + i}%`, transform: `rotate(${i * 30}deg)`, opacity: 0.3 }} />
-          ))}
+      <div className="relative overflow-hidden bg-gradient-to-br from-[#0f3528] via-[#1B4D3E] to-[#2d7a5a] px-5 pt-14 pb-10">
+        {/* Decorative blobs */}
+        <div className="absolute -top-10 -right-10 w-48 h-48 bg-green-400/20 rounded-full blur-3xl" />
+        <div className="absolute bottom-0 -left-10 w-40 h-40 bg-emerald-300/15 rounded-full blur-2xl" />
+
+        {/* Team badge */}
+        <div className="inline-flex items-center gap-1.5 bg-white/15 backdrop-blur-sm border border-white/20 rounded-full px-3 py-1 mb-4">
+          <Sparkles size={10} className="text-green-300" />
+          <span className="text-[10px] font-bold tracking-widest uppercase text-green-200">She Innovates</span>
         </div>
-        <div className="relative">
-          <div className="flex items-center gap-2 mb-1">
-            <span className="text-xs font-semibold tracking-widest uppercase text-green-200">She Innovates</span>
+
+        {/* Title */}
+        <div className="flex items-end gap-3 mb-2">
+          <div>
+            <h1 className="font-display text-4xl font-black text-white leading-none tracking-tight">LeafWrap</h1>
+            <p className="text-green-200 text-sm mt-1.5 leading-relaxed max-w-xs">
+              Agricultural waste → smart eco packaging → scan, grow, earn
+            </p>
           </div>
-          <h1 className="font-display text-3xl font-extrabold leading-tight mb-1">LeafWrap 🌿</h1>
-          <p className="text-green-100 text-sm leading-relaxed mb-4">
-            Turning rural agricultural waste into smart, seed-embedded eco packaging — scan, grow, and earn rewards.
-          </p>
-          <div className="inline-flex items-center gap-2 bg-white/15 backdrop-blur-sm rounded-full px-3 py-1.5 text-xs font-medium">
-            <span className="w-2 h-2 rounded-full bg-green-300 animate-pulse"></span>
-            Value Addition to Rural Waste
-          </div>
+          <span className="text-4xl mb-1">🌿</span>
+        </div>
+
+        {/* Live dot */}
+        <div className="mt-4 inline-flex items-center gap-2 bg-green-500/20 border border-green-400/30 rounded-full px-3 py-1.5">
+          <span className="w-2 h-2 rounded-full bg-green-400 pulse-ring flex-shrink-0" />
+          <span className="text-xs text-green-200 font-medium">Value Addition to Rural Waste • PS #8</span>
         </div>
       </div>
 
-      {/* Stats grid */}
-      <div className="px-4 -mt-5">
+      {/* Floating stats */}
+      <div className="px-4 -mt-5 relative z-10">
         <div className="grid grid-cols-2 gap-3">
-          {stats.map(({ label, value, icon: Icon, color, bg }) => (
-            <div key={label} className="bg-white rounded-2xl p-4 shadow-sm border border-gray-50 flex items-center gap-3">
-              <div className={`${bg} p-2.5 rounded-xl`}>
-                <Icon size={18} className={color} />
+          {stats.map(({ label, value, suffix, icon, bg, text }) => (
+            <div key={label} className="card p-4 flex items-center gap-3">
+              <div className={`${bg} w-11 h-11 rounded-2xl flex items-center justify-center text-xl flex-shrink-0`}>
+                {icon}
               </div>
               <div>
-                <p className="font-display font-bold text-xl text-[#132E25]">{value}</p>
-                <p className="text-xs text-gray-500">{label}</p>
+                <p className={`font-display font-black text-2xl leading-none stat-number ${text}`}>
+                  {value}{suffix}
+                </p>
+                <p className="text-xs text-gray-400 mt-0.5 font-medium">{label}</p>
               </div>
             </div>
           ))}
@@ -63,38 +72,48 @@ export default function HomePage() {
 
       {/* Quick actions */}
       <div className="px-4 mt-5">
-        <h2 className="font-display font-bold text-base text-[#132E25] mb-3">Quick Actions</h2>
+        <p className="section-title">Quick Actions</p>
         <div className="grid grid-cols-2 gap-3">
-          {quickActions.map(({ label, to, icon: Icon, color }) => (
+          {quickActions.map(({ label, desc, to, icon: Icon, color, textColor, emoji }) => (
             <Link
               key={to}
               to={to}
-              className={`${color} rounded-2xl p-4 flex items-center gap-3 font-semibold text-sm shadow-sm transition-transform active:scale-95`}
+              className={`${color} ${textColor} rounded-3xl p-4 flex flex-col gap-2 active:scale-95 transition-all duration-150 shadow-sm`}
             >
-              <Icon size={20} />
-              {label}
+              <div className="flex items-center justify-between">
+                <span className="text-2xl">{emoji}</span>
+                <ArrowRight size={14} className="opacity-60" />
+              </div>
+              <div>
+                <p className="font-display font-bold text-sm">{label}</p>
+                <p className="text-xs opacity-70 font-medium">{desc}</p>
+              </div>
             </Link>
           ))}
         </div>
       </div>
 
-      {/* Problem statement banner */}
-      <div className="mx-4 mt-5 rounded-2xl bg-gradient-to-r from-green-800 to-[#1B4D3E] p-4 text-white">
-        <p className="text-xs font-semibold text-green-300 mb-1 uppercase tracking-wider">Our Mission</p>
-        <h3 className="font-display font-bold text-sm mb-2">Value Addition to Rural Waste</h3>
-        <p className="text-xs text-green-100 leading-relaxed">
-          Converting agricultural residues, organic waste, and plastics from rural areas into reusable
-          seed-embedded packaging, organic fertilizers, and recycled materials — creating economic value
-          and preventing environmental pollution.
-        </p>
-        <Link to="/waste-tracker" className="mt-3 inline-flex items-center gap-1.5 bg-white/20 rounded-full px-3 py-1.5 text-xs font-medium hover:bg-white/30 transition-colors">
-          <Recycle size={12} /> Track Waste →
-        </Link>
+      {/* Mission card */}
+      <div className="mx-4 mt-5 mb-4">
+        <div className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-[#0f3528] to-[#1B4D3E] p-5 text-white">
+          <div className="absolute -right-6 -top-6 w-28 h-28 bg-green-400/15 rounded-full blur-2xl" />
+          <div className="relative">
+            <span className="text-xs font-bold tracking-widest uppercase text-green-300 mb-1 block">Our Mission</span>
+            <h3 className="font-display font-bold text-lg mb-2 leading-snug">
+              Turning Rural Waste<br/>into Worth 🌾
+            </h3>
+            <p className="text-xs text-green-100/80 leading-relaxed mb-4">
+              Sugarcane bagasse, paddy straw & areca fronds transformed into seed-embedded biodegradable packaging — creating green economic value for rural communities.
+            </p>
+            <Link to="/waste-tracker"
+              className="inline-flex items-center gap-2 bg-white/15 hover:bg-white/25 border border-white/20 rounded-2xl px-4 py-2 text-xs font-semibold transition-colors">
+              <Recycle size={12} /> Track Your Waste <ArrowRight size={10} />
+            </Link>
+          </div>
+        </div>
       </div>
 
-      {/* Spacer for nav */}
-      <div className="h-6" />
+      <div className="h-24" />
     </div>
   )
 }
-

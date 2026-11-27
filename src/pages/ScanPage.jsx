@@ -1,12 +1,12 @@
 import { useState } from 'react'
 import { useEco } from '../contexts/EcoContext'
-import { QrCode, CheckCircle2, AlertCircle, Leaf, Award } from 'lucide-react'
+import { QrCode, CheckCircle2, AlertCircle, Award, Leaf, ChevronRight, Sparkles } from 'lucide-react'
 
 const SAMPLE_CODES = {
-  'LW-2026-INIT01': { name: 'Bagasse Courier Box', material: 'Sugarcane Bagasse 30%', seed: 'Basil', credits: 25, co2: 1.2 },
-  'LW-2026-AREC02': { name: 'Areca Fiber Trio', material: 'Fallen Areca Fronds', seed: 'Wildflower', credits: 30, co2: 1.6 },
-  'LW-2026-BANA03': { name: 'Banana Stem Box', material: 'Banana Stem Fiber & Bio-Carbon', seed: 'Mint', credits: 28, co2: 1.4 },
-  'LW-2026-RICE04': { name: 'Rice Straw Composite', material: 'Bio-Polymer & Rice Straw', seed: 'Coriander', credits: 22, co2: 1.0 },
+  'LW-2026-INIT01': { name: 'Bagasse Courier Box', material: 'Sugarcane Bagasse 30%', seed: 'Basil', credits: 25, co2: 1.2, emoji: '🌾' },
+  'LW-2026-AREC02': { name: 'Areca Fiber Trio', material: 'Fallen Areca Fronds', seed: 'Wildflower', credits: 30, co2: 1.6, emoji: '🌴' },
+  'LW-2026-BANA03': { name: 'Banana Stem Box', material: 'Banana Stem Fiber & Bio-Carbon', seed: 'Mint', credits: 28, co2: 1.4, emoji: '🍌' },
+  'LW-2026-RICE04': { name: 'Rice Straw Composite', material: 'Bio-Polymer & Rice Straw', seed: 'Coriander', credits: 22, co2: 1.0, emoji: '🌾' },
 }
 
 export default function ScanPage() {
@@ -26,102 +26,145 @@ export default function ScanPage() {
         setResult(SAMPLE_CODES[trimmed])
         recordScan()
         setScanning(false)
-      }, 1200)
+      }, 1400)
     } else {
-      setError('QR code not recognized. Try one of the sample codes below.')
+      setError('Code not recognized. Try a sample code below.')
     }
   }
 
   const reset = () => { setResult(null); setCode(''); setError('') }
 
   return (
-    <div className="min-h-screen">
-      <div className="bg-gradient-to-br from-[#1B4D3E] to-[#2d6b56] text-white px-5 pt-10 pb-6">
-        <h1 className="font-display text-2xl font-extrabold mb-1">Scan Package 📦</h1>
-        <p className="text-green-100 text-sm">Enter the serial code from your eco packaging to earn Eco Credits.</p>
+    <div className="min-h-screen bg-[#F4F7F4] page-enter">
+      {/* Header */}
+      <div className="relative overflow-hidden bg-gradient-to-br from-[#1a1a2e] via-[#16213e] to-[#0f3460] px-5 pt-14 pb-8">
+        <div className="absolute -top-8 -right-8 w-40 h-40 bg-blue-500/20 rounded-full blur-3xl" />
+        <h1 className="font-display text-3xl font-black text-white mb-1">Scan Pack 📦</h1>
+        <p className="text-blue-200 text-sm">Enter your packaging serial code to verify & earn Eco Credits</p>
       </div>
 
-      <div className="px-4 mt-5">
+      <div className="px-4 mt-5 space-y-4">
         {!result ? (
           <>
-            <form onSubmit={handleSubmit} className="bg-white rounded-2xl p-5 shadow-sm border border-gray-100 mb-4">
-              <div className="flex flex-col items-center mb-4">
-                <div className="w-20 h-20 rounded-2xl bg-green-50 flex items-center justify-center mb-3">
-                  <QrCode size={40} className="text-[#1B4D3E]" />
+            {/* Scanner card */}
+            <div className="card p-5">
+              {/* QR visual */}
+              <div className="flex flex-col items-center mb-5">
+                <div className="relative">
+                  <div className="w-24 h-24 rounded-3xl bg-gradient-to-br from-[#1B4D3E] to-[#2d7a5a] flex items-center justify-center shadow-lg shadow-green-900/30 mb-3">
+                    <QrCode size={42} className="text-white" />
+                  </div>
+                  {scanning && (
+                    <div className="absolute inset-0 rounded-3xl border-2 border-green-400 animate-ping opacity-60" />
+                  )}
                 </div>
-                <p className="text-sm text-gray-500 text-center">Enter the serial code printed on your eco smart packaging</p>
+                <p className="text-sm text-gray-500 text-center max-w-xs">
+                  Enter the serial code printed on your eco smart packaging box
+                </p>
               </div>
-              <input
-                type="text"
-                value={code}
-                onChange={e => setCode(e.target.value)}
-                placeholder="e.g. LW-2026-INIT01"
-                className="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm font-mono focus:outline-none focus:ring-2 focus:ring-[#1B4D3E]/30 mb-3"
-              />
+
+              {/* Input */}
+              <div className="relative mb-3">
+                <input
+                  type="text"
+                  value={code}
+                  onChange={e => setCode(e.target.value)}
+                  placeholder="e.g. LW-2026-INIT01"
+                  className="w-full bg-gray-50 border-2 border-gray-100 focus:border-[#1B4D3E] rounded-2xl px-4 py-3.5 text-sm font-mono focus:outline-none transition-colors"
+                />
+              </div>
+
               {error && (
-                <div className="flex items-center gap-2 text-red-600 text-xs mb-3 bg-red-50 p-2 rounded-lg">
-                  <AlertCircle size={14} /> {error}
+                <div className="flex items-center gap-2 text-red-600 text-xs mb-3 bg-red-50 border border-red-100 p-3 rounded-2xl">
+                  <AlertCircle size={14} className="flex-shrink-0" /> {error}
                 </div>
               )}
-              <button
-                type="submit"
-                disabled={!code.trim() || scanning}
-                className="w-full bg-[#1B4D3E] text-white rounded-xl py-3 font-semibold text-sm disabled:opacity-50 transition-opacity"
-              >
-                {scanning ? 'Verifying...' : 'Verify Package'}
-              </button>
-            </form>
 
-            <div className="bg-green-50 rounded-2xl p-4 border border-green-100">
-              <p className="text-xs font-semibold text-green-800 mb-2">🧪 Sample Codes to Try:</p>
-              {Object.keys(SAMPLE_CODES).map(k => (
-                <button key={k} onClick={() => setCode(k)}
-                  className="block text-xs text-green-700 font-mono hover:underline mb-1 text-left">
-                  {k}
-                </button>
-              ))}
+              <button
+                onClick={handleSubmit}
+                disabled={!code.trim() || scanning}
+                className="w-full btn-primary flex items-center justify-center gap-2 disabled:opacity-40"
+              >
+                {scanning ? (
+                  <>
+                    <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+                    Verifying Package...
+                  </>
+                ) : (
+                  <><Sparkles size={15} /> Verify Package</>
+                )}
+              </button>
+            </div>
+
+            {/* Sample codes */}
+            <div className="card p-4">
+              <p className="text-xs font-bold text-gray-500 uppercase tracking-wider mb-3">🧪 Try a sample code</p>
+              <div className="space-y-2">
+                {Object.entries(SAMPLE_CODES).map(([key, val]) => (
+                  <button key={key} onClick={() => setCode(key)}
+                    className="w-full flex items-center justify-between bg-gray-50 hover:bg-green-50 rounded-2xl px-3 py-2.5 transition-colors group">
+                    <div className="flex items-center gap-2.5">
+                      <span className="text-lg">{val.emoji}</span>
+                      <div className="text-left">
+                        <p className="text-xs font-semibold text-[#132E25]">{val.name}</p>
+                        <p className="text-[10px] font-mono text-gray-400">{key}</p>
+                      </div>
+                    </div>
+                    <ChevronRight size={14} className="text-gray-300 group-hover:text-green-500 transition-colors" />
+                  </button>
+                ))}
+              </div>
             </div>
           </>
         ) : (
-          <div className="bg-white rounded-2xl p-5 shadow-sm border border-green-100 animate-fade-in">
-            <div className="flex items-center gap-2 mb-4">
-              <CheckCircle2 size={24} className="text-green-600" />
-              <span className="font-display font-bold text-lg text-[#132E25]">Package Verified!</span>
+          /* Success state */
+          <div className="space-y-4 page-enter">
+            {/* Celebration banner */}
+            <div className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-green-500 to-emerald-600 p-5 text-white text-center">
+              <div className="absolute inset-0 opacity-20" style={{backgroundImage:'radial-gradient(circle at 20% 50%, white 1px, transparent 1px), radial-gradient(circle at 80% 20%, white 1px, transparent 1px)', backgroundSize:'30px 30px'}} />
+              <CheckCircle2 size={40} className="mx-auto mb-2" />
+              <h2 className="font-display font-black text-2xl">Package Verified!</h2>
+              <p className="text-green-100 text-sm mt-1">{result.name}</p>
             </div>
-            <div className="bg-green-50 rounded-xl p-4 mb-4 space-y-2">
-              <div className="flex justify-between text-sm">
-                <span className="text-gray-500">Product</span>
-                <span className="font-semibold text-[#132E25]">{result.name}</span>
+
+            {/* Details */}
+            <div className="card p-4 space-y-3">
+              {[
+                { label: 'Material', value: result.material },
+                { label: 'Embedded Seed', value: `${result.seed} 🌱` },
+              ].map(({ label, value }) => (
+                <div key={label} className="flex justify-between items-center py-2 border-b border-gray-50 last:border-0">
+                  <span className="text-sm text-gray-400 font-medium">{label}</span>
+                  <span className="text-sm font-semibold text-[#132E25]">{value}</span>
+                </div>
+              ))}
+            </div>
+
+            {/* Rewards */}
+            <div className="grid grid-cols-2 gap-3">
+              <div className="card p-4 text-center">
+                <div className="w-10 h-10 bg-amber-100 rounded-2xl flex items-center justify-center mx-auto mb-2">
+                  <Award size={20} className="text-amber-600" />
+                </div>
+                <p className="font-display font-black text-2xl text-amber-600">+{result.credits}</p>
+                <p className="text-xs text-gray-400 font-medium mt-0.5">Eco Credits</p>
               </div>
-              <div className="flex justify-between text-sm">
-                <span className="text-gray-500">Material</span>
-                <span className="font-semibold text-[#132E25]">{result.material}</span>
-              </div>
-              <div className="flex justify-between text-sm">
-                <span className="text-gray-500">Embedded Seed</span>
-                <span className="font-semibold text-green-700">{result.seed} 🌱</span>
+              <div className="card p-4 text-center">
+                <div className="w-10 h-10 bg-green-100 rounded-2xl flex items-center justify-center mx-auto mb-2">
+                  <Leaf size={20} className="text-green-600" />
+                </div>
+                <p className="font-display font-black text-2xl text-green-600">-{result.co2}kg</p>
+                <p className="text-xs text-gray-400 font-medium mt-0.5">CO₂ Offset</p>
               </div>
             </div>
-            <div className="grid grid-cols-2 gap-3 mb-4">
-              <div className="bg-amber-50 rounded-xl p-3 text-center">
-                <Award size={18} className="text-amber-600 mx-auto mb-1" />
-                <p className="font-display font-bold text-xl text-amber-700">+{result.credits}</p>
-                <p className="text-xs text-amber-600">Eco Credits Earned</p>
-              </div>
-              <div className="bg-green-50 rounded-xl p-3 text-center">
-                <Leaf size={18} className="text-green-600 mx-auto mb-1" />
-                <p className="font-display font-bold text-xl text-green-700">-{result.co2}kg</p>
-                <p className="text-xs text-green-600">CO₂ Offset</p>
-              </div>
-            </div>
-            <button onClick={reset}
-              className="w-full bg-[#1B4D3E] text-white rounded-xl py-3 font-semibold text-sm">
-              Scan Another Package
+
+            <button onClick={reset} className="w-full btn-primary">
+              Scan Another Package 📦
             </button>
           </div>
         )}
       </div>
+      <div className="h-24" />
     </div>
   )
 }
-
