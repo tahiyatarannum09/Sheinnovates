@@ -2,6 +2,7 @@ import { useEco } from '../contexts/EcoContext'
 import { ArrowRight, Recycle, Sparkles } from 'lucide-react'
 import { Link } from 'react-router-dom'
 import AgriLoopLogo from '../components/ui/AgriLoopLogo'
+import UserProfileBar from '../components/auth/UserProfileBar'
 
 function Leaf3D() {
   return (
@@ -77,12 +78,17 @@ export default function HomePage() {
         </div>
 
         {/* Logo + team */}
-        <div className="relative flex items-center justify-between mb-4">
+        <div className="relative flex items-center justify-between mb-3">
           <AgriLoopLogo size={42} showText={true} />
           <div className="flex items-center gap-1.5 bg-white/10 border border-white/20 rounded-full px-2.5 py-1">
             <Sparkles size={9} className="text-green-300" />
             <span className="text-[9px] font-bold tracking-widest uppercase text-green-200">She Innovates</span>
           </div>
+        </div>
+
+        {/* Active session profile & role bar */}
+        <div className="relative mb-4">
+          <UserProfileBar variant="dark" />
         </div>
 
         {/* 3D Leaf + text side by side */}

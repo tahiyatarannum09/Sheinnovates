@@ -1,14 +1,7 @@
-import { useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { useEco } from '../contexts/EcoContext'
-import { CheckCircle2, AlertCircle, Award, Leaf, ChevronRight, Sparkles } from 'lucide-react'
+import { CheckCircle2, AlertCircle, Award, Leaf, ChevronRight, Sparkles, QrCode, Keyboard, Camera, StopCircle } from 'lucide-react'
 import AgriLoopLogo from '../components/ui/AgriLoopLogo'
-
-const SAMPLE_CODES = {
-  'AL-2026-INIT01': { name: 'Bagasse Courier Box',       material: 'Sugarcane Bagasse 30%',        seed: 'Basil',      credits: 25, co2: 1.2, emoji: '🌾' },
-  'AL-2026-AREC02': { name: 'Areca Fiber Trio',          material: 'Fallen Areca Fronds',          seed: 'Wildflower', credits: 30, co2: 1.6, emoji: '🌴' },
-  'AL-2026-BANA03': { name: 'Banana Stem Box',           material: 'Banana Stem Fiber & Bio-Carbon',seed: 'Mint',      credits: 28, co2: 1.4, emoji: '🍌' },
-  'AL-2026-RICE04': { name: 'Rice Straw Composite',      material: 'Bio-Polymer & Rice Straw',     seed: 'Coriander',  credits: 22, co2: 1.0, emoji: '🌾' },
-}
 
 function Cube3D({ scanning }) {
   return (
@@ -26,24 +19,113 @@ function Cube3D({ scanning }) {
 }
 
 export default function ScanPage() {
-  const { recordScan } = useEco()
+  const { packageRecords, findPackageByCode, recordScan } = useEco()
+  const [mode, setMode] = useState('manual')
   const [code, setCode] = useState('')
   const [result, setResult] = useState(null)
   const [error, setError] = useState('')
   const [scanning, setScanning] = useState(false)
+  const [cameraActive, setCameraActive] = useState(false)
+  const [cameraNotice, setCameraNotice] = useState('')
+
+  const videoRef = useRef(null)
+  const streamRef = useRef(null)
+  const scanTimerRef = useRef(null)
+
+  const activePackages = packageRecords.filter(p => p.status === 'Active')
+
+  const stopCamera = () => {
+    if (scanTimerRef.current) {
+      clearInterval(scanTimerRef.current)
+      scanTimerRef.current = null
+    }
+    if (streamRef.current) {
+      streamRef.current.getTracks().forEach(t => t.stop())
+      streamRef.current = null
+    }
+    setCameraActive(false)
+  }
+
+  useEffect(() => {
+    return () => stopCamera()
+  }, [])
+
+  const verifyCode = (rawCode, method = 'Manual Entry') => {
+    setError('')
+    const pkg = findPackageByCode(rawCode)
+    if (!pkg) {
+      setError('Code not recognized. Try an active sample code below.')
+      return
+    }
+    if (pkg.status !== 'Active') {
+      setError(`Package ${pkg.code} is currently inactive and cannot be verified.`)
+      return
+    }
+
+    stopCamera()
+    setScanning(true)
+    setTimeout(() => {
+      setResult({ ...pkg, method })
+      recordScan(pkg, method)
+      setScanning(false)
+    }, 1200)
+  }
 
   const handleSubmit = (e) => {
     e.preventDefault()
+    verifyCode(code, 'Manual Entry')
+  }
+
+  const startCameraScanner = async () => {
+    setCameraNotice('')
     setError('')
-    const trimmed = code.trim().toUpperCase()
-    if (SAMPLE_CODES[trimmed]) {
-      setScanning(true)
-      setTimeout(() => { setResult(SAMPLE_CODES[trimmed]); recordScan(); setScanning(false) }, 1600)
-    } else {
-      setError('Code not recognized. Try a sample code below.')
+
+    if (!navigator.mediaDevices?.getUserMedia) {
+      setCameraNotice('Camera access is not available in this browser. Use a simulated QR scan below or switch to Manual Entry.')
+      return
+    }
+
+    try {
+      const stream = await navigator.mediaDevices.getUserMedia({
+        video: { facingMode: 'environment' },
+      })
+      streamRef.current = stream
+      setCameraActive(true)
+
+      setTimeout(() => {
+        if (videoRef.current) {
+          videoRef.current.srcObject = stream
+        }
+      }, 50)
+
+      if ('BarcodeDetector' in window) {
+        const detector = new window.BarcodeDetector({ formats: ['qr_code'] })
+        scanTimerRef.current = setInterval(async () => {
+          if (!videoRef.current || videoRef.current.readyState < 2) return
+          try {
+            const barcodes = await detector.detect(videoRef.current)
+            if (barcodes.length > 0 && barcodes[0].rawValue) {
+              verifyCode(barcodes[0].rawValue, 'QR Scan')
+            }
+          } catch {
+            // Keep polling frame until valid QR detected
+          }
+        }, 500)
+      } else {
+        setCameraNotice('Live camera preview started. Automatic QR decoding requires BarcodeDetector; use a quick QR demo scan below.')
+      }
+    } catch {
+      setCameraNotice('Camera permission was denied or unavailable. Use a quick QR demo scan below or Manual Entry.')
     }
   }
-  const reset = () => { setResult(null); setCode(''); setError('') }
+
+  const reset = () => {
+    stopCamera()
+    setResult(null)
+    setCode('')
+    setError('')
+    setCameraNotice('')
+  }
 
   return (
     <div className="min-h-screen bg-[#F4F7F4] page-enter">
@@ -65,7 +147,7 @@ export default function ScanPage() {
           <div className="text-center -mt-2">
             <div className="inline-flex items-center gap-2 bg-blue-500/20 border border-blue-400/30 rounded-full px-3 py-1 text-xs text-blue-200 font-medium">
               <div className="w-3 h-3 border-2 border-blue-300/40 border-t-blue-300 rounded-full animate-spin" />
-              Verifying package on blockchain...
+              Verifying package authenticity...
             </div>
           </div>
         )}
@@ -74,37 +156,142 @@ export default function ScanPage() {
       <div className="px-4 mt-5 space-y-4">
         {!result ? (
           <>
-            <div className="card p-5">
-              <div className="relative mb-3">
-                <input type="text" value={code} onChange={e => setCode(e.target.value)}
-                  placeholder="Enter code  e.g. AL-2026-INIT01"
-                  className="w-full bg-gray-50 border-2 border-gray-100 focus:border-[#1B4D3E] rounded-2xl px-4 py-3.5 text-sm font-mono focus:outline-none transition-colors" />
-              </div>
-              {error && (
-                <div className="flex items-center gap-2 text-red-600 text-xs mb-3 bg-red-50 border border-red-100 p-3 rounded-2xl">
-                  <AlertCircle size={14} className="flex-shrink-0" /> {error}
-                </div>
-              )}
-              <button onClick={handleSubmit} disabled={!code.trim() || scanning}
-                className="w-full btn-primary flex items-center justify-center gap-2 disabled:opacity-40">
-                {scanning
-                  ? <><div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" /> Verifying...</>
-                  : <><Sparkles size={15} /> Verify Package</>}
+            {/* Mode Switcher */}
+            <div className="card p-1 flex">
+              <button
+                type="button"
+                onClick={() => {
+                  stopCamera()
+                  setMode('manual')
+                  setError('')
+                }}
+                className={`flex-1 py-2 text-xs font-bold rounded-2xl flex items-center justify-center gap-1.5 transition-all ${
+                  mode === 'manual' ? 'bg-[#1B4D3E] text-white shadow-sm' : 'text-gray-400'
+                }`}
+              >
+                <Keyboard size={14} /> Manual Code Entry
+              </button>
+              <button
+                type="button"
+                onClick={() => {
+                  setMode('qr')
+                  setError('')
+                }}
+                className={`flex-1 py-2 text-xs font-bold rounded-2xl flex items-center justify-center gap-1.5 transition-all ${
+                  mode === 'qr' ? 'bg-[#1B4D3E] text-white shadow-sm' : 'text-gray-400'
+                }`}
+              >
+                <QrCode size={14} /> QR Code Scan
               </button>
             </div>
 
-            {/* Sample codes */}
+            {mode === 'manual' ? (
+              <form onSubmit={handleSubmit} className="card p-5">
+                <div className="relative mb-3">
+                  <input
+                    type="text"
+                    value={code}
+                    onChange={e => setCode(e.target.value)}
+                    placeholder="Enter code  e.g. AL-2026-INIT01"
+                    className="w-full bg-gray-50 border-2 border-gray-100 focus:border-[#1B4D3E] rounded-2xl px-4 py-3.5 text-sm font-mono focus:outline-none transition-colors"
+                  />
+                </div>
+                {error && (
+                  <div className="flex items-center gap-2 text-red-600 text-xs mb-3 bg-red-50 border border-red-100 p-3 rounded-2xl">
+                    <AlertCircle size={14} className="flex-shrink-0" /> {error}
+                  </div>
+                )}
+                <button
+                  type="submit"
+                  disabled={!code.trim() || scanning}
+                  className="w-full btn-primary flex items-center justify-center gap-2 disabled:opacity-40"
+                >
+                  {scanning
+                    ? <><div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" /> Verifying...</>
+                    : <><Sparkles size={15} /> Verify Package</>}
+                </button>
+              </form>
+            ) : (
+              <div className="card p-5 space-y-3">
+                <div className="relative rounded-2xl overflow-hidden bg-slate-900 aspect-video flex items-center justify-center border border-slate-800">
+                  {cameraActive ? (
+                    <video
+                      ref={videoRef}
+                      autoPlay
+                      playsInline
+                      muted
+                      className="w-full h-full object-cover"
+                    />
+                  ) : (
+                    <div className="text-center p-4">
+                      <QrCode size={36} className="text-green-400 mx-auto mb-2 opacity-80" />
+                      <p className="text-xs text-slate-300 font-medium">
+                        Point camera at an AgriLoop QR label
+                      </p>
+                      <p className="text-[10px] text-slate-400 mt-1">
+                        Or simulate a QR scan using active packages below
+                      </p>
+                    </div>
+                  )}
+                </div>
+
+                {cameraNotice && (
+                  <div className="text-xs text-amber-800 bg-amber-50 border border-amber-100 p-3 rounded-2xl">
+                    {cameraNotice}
+                  </div>
+                )}
+
+                {error && (
+                  <div className="flex items-center gap-2 text-red-600 text-xs bg-red-50 border border-red-100 p-3 rounded-2xl">
+                    <AlertCircle size={14} className="flex-shrink-0" /> {error}
+                  </div>
+                )}
+
+                {!cameraActive ? (
+                  <button
+                    type="button"
+                    onClick={startCameraScanner}
+                    disabled={scanning}
+                    className="w-full btn-primary flex items-center justify-center gap-2"
+                  >
+                    <Camera size={15} /> Start Camera QR Scanner
+                  </button>
+                ) : (
+                  <button
+                    type="button"
+                    onClick={stopCamera}
+                    className="w-full btn-secondary flex items-center justify-center gap-2 text-red-700 bg-red-50 border-red-100"
+                  >
+                    <StopCircle size={15} /> Stop Camera
+                  </button>
+                )}
+              </div>
+            )}
+
+            {/* Active sample / registered codes */}
             <div className="card p-4">
-              <p className="text-xs font-bold text-gray-400 uppercase tracking-wider mb-3">🧪 Try a sample code</p>
+              <p className="text-xs font-bold text-gray-400 uppercase tracking-wider mb-3">
+                {mode === 'qr' ? '📷 Simulate QR scan for active package' : '🧪 Try a sample code'}
+              </p>
               <div className="space-y-2">
-                {Object.entries(SAMPLE_CODES).map(([key, val]) => (
-                  <button key={key} onClick={() => setCode(key)}
-                    className="w-full flex items-center justify-between bg-gray-50 hover:bg-green-50 rounded-2xl px-3 py-2.5 transition-colors group">
+                {activePackages.map((pkg) => (
+                  <button
+                    key={pkg.code}
+                    type="button"
+                    onClick={() => {
+                      if (mode === 'qr') {
+                        verifyCode(pkg.code, 'QR Scan')
+                      } else {
+                        setCode(pkg.code)
+                      }
+                    }}
+                    className="w-full flex items-center justify-between bg-gray-50 hover:bg-green-50 rounded-2xl px-3 py-2.5 transition-colors group"
+                  >
                     <div className="flex items-center gap-2.5">
-                      <span className="text-xl">{val.emoji}</span>
+                      <span className="text-xl">{pkg.emoji}</span>
                       <div className="text-left">
-                        <p className="text-xs font-semibold text-[#132E25]">{val.name}</p>
-                        <p className="text-[10px] font-mono text-gray-400">{key}</p>
+                        <p className="text-xs font-semibold text-[#132E25]">{pkg.name}</p>
+                        <p className="text-[10px] font-mono text-gray-400">{pkg.code}</p>
                       </div>
                     </div>
                     <ChevronRight size={14} className="text-gray-300 group-hover:text-green-500 transition-colors" />
@@ -120,9 +307,16 @@ export default function ScanPage() {
               <CheckCircle2 size={40} className="mx-auto mb-2" />
               <h2 className="font-display font-black text-2xl">Verified! ✅</h2>
               <p className="text-green-100 text-sm mt-1">{result.name}</p>
+              <span className="inline-block mt-2 text-[10px] font-bold uppercase tracking-wider bg-white/20 rounded-full px-2.5 py-0.5">
+                {result.method}
+              </span>
             </div>
             <div className="card p-4 space-y-3">
-              {[['Material', result.material], ['Embedded Seed', `${result.seed} 🌱`]].map(([l, v]) => (
+              {[
+                ['Package Code', result.code],
+                ['Material', result.material],
+                ['Embedded Seed', `${result.seed} 🌱`],
+              ].map(([l, v]) => (
                 <div key={l} className="flex justify-between items-center py-2 border-b border-gray-50 last:border-0">
                   <span className="text-sm text-gray-400 font-medium">{l}</span>
                   <span className="text-sm font-semibold text-[#132E25]">{v}</span>
