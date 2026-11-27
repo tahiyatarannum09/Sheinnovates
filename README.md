@@ -19,11 +19,6 @@
 
 > Rural areas generate various types of waste — agricultural residues, organic waste, plastics, and other discarded materials — which often remain underutilised due to a lack of proper processing facilities, recycling mechanisms, and value-recovery methods. Improper waste handling leads to environmental pollution, resource wastage, and missed economic opportunities.
 
-<div align="center">
-  <img src="./public/images/problem-statement.jpg" alt="Problem Statement — She Innovates Hackathon 2026" width="720" />
-  <br/><sub><em>Problem Statement #8 — She Innovates Hackathon 2026</em></sub>
-</div>
-
 ---
 
 ## 💡 Our Solution — The LeafWrap Ecosystem
