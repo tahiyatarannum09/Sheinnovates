@@ -1,6 +1,6 @@
 import { NavLink } from 'react-router-dom'
 import { Home, QrCode, Sprout, ShoppingBag, BarChart3, Recycle } from 'lucide-react'
-import LeafWrapLogo from './LeafWrapLogo'
+import LeafWrapLogo from './AgriLoopLogo'
 
 const tabs = [
   { to: '/',               icon: Home,        label: 'Home'   },

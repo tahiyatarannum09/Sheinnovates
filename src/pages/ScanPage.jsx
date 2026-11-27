@@ -1,13 +1,13 @@
 import { useState } from 'react'
 import { useEco } from '../contexts/EcoContext'
 import { CheckCircle2, AlertCircle, Award, Leaf, ChevronRight, Sparkles } from 'lucide-react'
-import LeafWrapLogo from '../components/ui/LeafWrapLogo'
+import LeafWrapLogo from '../components/ui/AgriLoopLogo'
 
 const SAMPLE_CODES = {
-  'LW-2026-INIT01': { name: 'Bagasse Courier Box',       material: 'Sugarcane Bagasse 30%',        seed: 'Basil',      credits: 25, co2: 1.2, emoji: '🌾' },
-  'LW-2026-AREC02': { name: 'Areca Fiber Trio',          material: 'Fallen Areca Fronds',          seed: 'Wildflower', credits: 30, co2: 1.6, emoji: '🌴' },
-  'LW-2026-BANA03': { name: 'Banana Stem Box',           material: 'Banana Stem Fiber & Bio-Carbon',seed: 'Mint',      credits: 28, co2: 1.4, emoji: '🍌' },
-  'LW-2026-RICE04': { name: 'Rice Straw Composite',      material: 'Bio-Polymer & Rice Straw',     seed: 'Coriander',  credits: 22, co2: 1.0, emoji: '🌾' },
+  'AL-2026-INIT01': { name: 'Bagasse Courier Box',       material: 'Sugarcane Bagasse 30%',        seed: 'Basil',      credits: 25, co2: 1.2, emoji: '🌾' },
+  'AL-2026-AREC02': { name: 'Areca Fiber Trio',          material: 'Fallen Areca Fronds',          seed: 'Wildflower', credits: 30, co2: 1.6, emoji: '🌴' },
+  'AL-2026-BANA03': { name: 'Banana Stem Box',           material: 'Banana Stem Fiber & Bio-Carbon',seed: 'Mint',      credits: 28, co2: 1.4, emoji: '🍌' },
+  'AL-2026-RICE04': { name: 'Rice Straw Composite',      material: 'Bio-Polymer & Rice Straw',     seed: 'Coriander',  credits: 22, co2: 1.0, emoji: '🌾' },
 }
 
 function Cube3D({ scanning }) {
@@ -18,7 +18,7 @@ function Cube3D({ scanning }) {
         <div className="face back">🌿</div>
         <div className="face left">♻️</div>
         <div className="face right">🌱</div>
-        <div className="face top" style={{ fontSize: 14, color: 'rgba(255,255,255,0.8)', fontWeight: 700 }}>LW</div>
+        <div className="face top" style={{ fontSize: 14, color: 'rgba(255,255,255,0.8)', fontWeight: 700 }}>AL</div>
         <div className="face bottom" style={{ fontSize: 14, color: 'rgba(255,255,255,0.6)', fontWeight: 700 }}>2026</div>
       </div>
     </div>
@@ -77,7 +77,7 @@ export default function ScanPage() {
             <div className="card p-5">
               <div className="relative mb-3">
                 <input type="text" value={code} onChange={e => setCode(e.target.value)}
-                  placeholder="Enter code  e.g. LW-2026-INIT01"
+                  placeholder="Enter code  e.g. AL-2026-INIT01"
                   className="w-full bg-gray-50 border-2 border-gray-100 focus:border-[#1B4D3E] rounded-2xl px-4 py-3.5 text-sm font-mono focus:outline-none transition-colors" />
               </div>
               {error && (

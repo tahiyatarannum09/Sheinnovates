@@ -1,4 +1,4 @@
-# 🌿 LeafWrap — Eco-Friendly Smart Packaging & Reward System
+# 🌿 AgriLoop — Eco-Friendly Smart Packaging & Reward System
 
 > **Team:** She Innovates &nbsp;|&nbsp; **Problem Statement #8:** Value Addition to Rural Waste for Better Waste Management
 
@@ -37,14 +37,14 @@
 
 ---
 
-## 💡 Our Solution — The LeafWrap Ecosystem
+## 💡 Our Solution — The AgriLoop Ecosystem
 
-LeafWrap transforms agricultural waste into **smart, seed-embedded biodegradable packaging**, then connects consumers back to nature via a mobile app — creating a full circular loop: **Waste → Product → Use → Soil → Growth**.
+AgriLoop transforms agricultural waste into **smart, seed-embedded biodegradable packaging**, then connects consumers back to nature via a mobile app — creating a full circular loop: **Waste → Product → Use → Soil → Growth**.
 
 ### The App + QR Ecosystem
 
 <div align="center">
-  <img src="./public/images/app-qr-ecosystem.jpg" alt="LeafWrap App + QR Ecosystem" width="800" />
+  <img src="./public/images/app-qr-ecosystem.jpg" alt="AgriLoop App + QR Ecosystem" width="800" />
   <br/><sub><em>Scan & Verify → Trace the agricultural waste source → Engage & Earn Eco Credits</em></sub>
 </div>
 
@@ -141,7 +141,7 @@ Sheinnovates/
 ├── public/images/          # App screenshots + PPT photos
 ├── src/
 │   ├── contexts/           # Global state (EcoContext)
-│   ├── components/ui/      # BottomNav, LeafWrapLogo
+│   ├── components/ui/      # BottomNav, AgriLoopLogo
 │   └── pages/
 │       ├── HomePage.jsx
 │       ├── ScanPage.jsx
@@ -162,5 +162,5 @@ Sheinnovates/
 ---
 
 <div align="center">
-  <strong>🌿 LeafWrap × She Innovates — Turning Agricultural Waste into Worth, One Package at a Time 🌱</strong>
+  <strong>🌿 AgriLoop × She Innovates — Turning Agricultural Waste into Worth, One Package at a Time 🌱</strong>
 </div>

@@ -1,7 +1,7 @@
 import { useEco } from '../contexts/EcoContext'
 import { ArrowRight, Recycle, Sparkles } from 'lucide-react'
 import { Link } from 'react-router-dom'
-import LeafWrapLogo from '../components/ui/LeafWrapLogo'
+import LeafWrapLogo from '../components/ui/AgriLoopLogo'
 
 function Leaf3D() {
   return (

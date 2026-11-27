@@ -1,6 +1,6 @@
 import { useEco } from '../contexts/EcoContext'
 import { Flame, Award, Car, Leaf } from 'lucide-react'
-import LeafWrapLogo from '../components/ui/LeafWrapLogo'
+import LeafWrapLogo from '../components/ui/AgriLoopLogo'
 
 const milestones = [
   { label: 'First Scan',   emoji: '📦', achieved: true  },

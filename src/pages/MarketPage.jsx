@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { useEco } from '../contexts/EcoContext'
 import { Award, CheckCircle2, ShoppingCart, Tag, Leaf, Package, ChevronDown, ChevronUp } from 'lucide-react'
-import LeafWrapLogo from '../components/ui/LeafWrapLogo'
+import LeafWrapLogo from '../components/ui/AgriLoopLogo'
 
 // Each product uses a unique crop (cropX%, cropY%) from real prototype photos:
 // biodegradable-bowls.jpg  → top-left=flat tray front | top-right=flat tray side | bottom=bowls on plate
