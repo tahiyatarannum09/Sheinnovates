@@ -52,3 +52,4 @@ export default function LeafWrapLogo({ size = 40, showText = false, className = 
     </div>
   )
 }
+
