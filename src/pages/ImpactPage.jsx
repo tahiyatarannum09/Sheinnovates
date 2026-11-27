@@ -1,12 +1,13 @@
 import { useEco } from '../contexts/EcoContext'
 import { Flame, Award, Car, Leaf } from 'lucide-react'
+import LeafWrapLogo from '../components/ui/LeafWrapLogo'
 
 const milestones = [
-  { label: 'First Scan',      emoji: '📦', achieved: true  },
-  { label: '5 Packs',         emoji: '🏅', achieved: false },
-  { label: 'First Plant',     emoji: '🌱', achieved: true  },
-  { label: '10kg CO₂',        emoji: '🌍', achieved: true  },
-  { label: 'Eco Champion',    emoji: '🏆', achieved: false },
+  { label: 'First Scan',   emoji: '📦', achieved: true  },
+  { label: '5 Packs',      emoji: '🏅', achieved: false },
+  { label: 'First Plant',  emoji: '🌱', achieved: true  },
+  { label: '10kg CO₂',     emoji: '🌍', achieved: true  },
+  { label: 'Eco Champion', emoji: '🏆', achieved: false },
 ]
 
 const wasteData = [
@@ -17,42 +18,81 @@ const wasteData = [
   { type: 'Other Residues',    percent: 10, color: '#86efac' },
 ]
 
+function Earth3D() {
+  return (
+    <div className="relative flex items-center justify-center py-2">
+      {/* Atmosphere */}
+      <div className="earth-glow" />
+      {/* Planet */}
+      <div className="earth-3d z-10">
+        {/* Continents overlay */}
+        <div style={{
+          position: 'absolute', top: '20%', left: '10%',
+          width: '35%', height: '40%',
+          background: 'rgba(74,222,128,0.3)',
+          borderRadius: '40% 60% 55% 45% / 50% 40% 60% 50%',
+          filter: 'blur(2px)'
+        }} />
+        <div style={{
+          position: 'absolute', top: '40%', left: '55%',
+          width: '30%', height: '30%',
+          background: 'rgba(34,197,94,0.25)',
+          borderRadius: '60% 40% 50% 50% / 40% 60% 40% 60%',
+          filter: 'blur(2px)'
+        }} />
+      </div>
+    </div>
+  )
+}
+
 function StatRing({ value, max, label, color, emoji }) {
   const pct = Math.min(100, (value / max) * 100)
   const r = 28, circ = 2 * Math.PI * r
   return (
-    <div className="card p-4 flex flex-col items-center gap-2">
-      <svg width="72" height="72" className="-rotate-90">
-        <circle cx="36" cy="36" r={r} fill="none" stroke="#f3f4f6" strokeWidth="6" />
-        <circle cx="36" cy="36" r={r} fill="none" stroke={color} strokeWidth="6"
-          strokeDasharray={circ} strokeDashoffset={circ * (1 - pct / 100)}
-          strokeLinecap="round" style={{ transition: 'stroke-dashoffset 1s ease' }} />
-      </svg>
-      <div className="text-center -mt-10 mb-2">
-        <span className="text-xl">{emoji}</span>
+    <div className="card card-3d p-4 flex flex-col items-center gap-1">
+      <div className="relative">
+        <svg width="72" height="72" className="-rotate-90">
+          <circle cx="36" cy="36" r={r} fill="none" stroke="#f3f4f6" strokeWidth="6" />
+          <circle cx="36" cy="36" r={r} fill="none" stroke={color} strokeWidth="6"
+            strokeDasharray={circ} strokeDashoffset={circ * (1 - pct / 100)}
+            strokeLinecap="round" style={{ transition: 'stroke-dashoffset 1s ease' }} />
+        </svg>
+        <span className="absolute inset-0 flex items-center justify-center text-xl">{emoji}</span>
       </div>
-      <div className="text-center">
-        <p className="font-display font-black text-lg text-[#132E25] leading-none">{value}</p>
-        <p className="text-xs text-gray-400 mt-0.5">{label}</p>
-      </div>
+      <p className="font-display font-black text-base text-[#132E25] leading-none">{value}</p>
+      <p className="text-[10px] text-gray-400 text-center font-medium">{label}</p>
     </div>
   )
 }
 
 export default function ImpactPage() {
   const { ecoCredits, co2Saved, packagesScanned, plantsGrown } = useEco()
-
-  const carKm        = (co2Saved * 6.5).toFixed(1)
-  const treeYears    = (co2Saved / 21.77).toFixed(2)
+  const carKm         = (co2Saved * 6.5).toFixed(1)
+  const treeYears     = (co2Saved / 21.77).toFixed(2)
   const burnPrevented = (packagesScanned * 2.3).toFixed(1)
 
   return (
     <div className="min-h-screen bg-[#F4F7F4] page-enter">
-      {/* Header */}
-      <div className="relative overflow-hidden bg-gradient-to-br from-[#1e3a5f] via-[#1a56a0] to-[#3b82f6] px-5 pt-14 pb-8">
-        <div className="absolute -bottom-6 -right-6 w-36 h-36 bg-blue-300/20 rounded-full blur-2xl" />
-        <h1 className="font-display text-3xl font-black text-white mb-1">Your Impact 🌍</h1>
-        <p className="text-blue-100 text-sm">The real-world difference you're making</p>
+      {/* Header with 3D Earth */}
+      <div className="relative overflow-hidden bg-gradient-to-br from-[#0a0a1a] via-[#1e3a5f] to-[#1a56a0] px-5 pt-10 pb-4">
+        <div className="absolute -top-10 -right-10 w-48 h-48 bg-blue-400/10 rounded-full blur-3xl" />
+
+        <div className="flex items-center gap-3 mb-2">
+          <LeafWrapLogo size={30} />
+          <div>
+            <h1 className="font-display text-2xl font-black text-white leading-none">Your Impact</h1>
+            <p className="text-blue-200 text-xs mt-0.5">Real-world environmental difference</p>
+          </div>
+        </div>
+
+        {/* 3D Earth */}
+        <Earth3D />
+
+        <div className="text-center -mt-1 pb-2">
+          <span className="inline-flex items-center gap-1.5 bg-green-500/20 border border-green-400/30 rounded-full px-3 py-1 text-xs text-green-200 font-medium">
+            🌱 {co2Saved}kg CO₂ saved so far
+          </span>
+        </div>
       </div>
 
       <div className="px-4 mt-5 space-y-4">
@@ -70,7 +110,7 @@ export default function ImpactPage() {
           <div className="grid grid-cols-3 gap-3 text-center">
             <div className="bg-green-50 rounded-2xl p-3">
               <p className="text-2xl font-display font-black text-green-700">{co2Saved}</p>
-              <p className="text-xs text-green-600 font-medium">kg CO₂ saved</p>
+              <p className="text-xs text-green-600 font-medium">kg CO₂</p>
             </div>
             <div className="bg-blue-50 rounded-2xl p-3">
               <Car size={16} className="text-blue-500 mx-auto mb-1" />
@@ -108,7 +148,7 @@ export default function ImpactPage() {
                   <span className="font-bold" style={{ color: w.color }}>{w.percent}%</span>
                 </div>
                 <div className="bg-gray-100 rounded-full h-2 overflow-hidden">
-                  <div className="h-full rounded-full transition-all duration-700" style={{ width: `${w.percent}%`, backgroundColor: w.color }} />
+                  <div className="h-full rounded-full" style={{ width: `${w.percent}%`, backgroundColor: w.color, transition: 'width 1s ease' }} />
                 </div>
               </div>
             ))}
@@ -119,7 +159,7 @@ export default function ImpactPage() {
         <div className="card p-5">
           <p className="section-title flex items-center gap-2"><Award size={15} className="text-amber-500" /> Milestones</p>
           <div className="flex justify-between">
-            {milestones.map((m, i) => (
+            {milestones.map(m => (
               <div key={m.label} className="flex flex-col items-center gap-1.5 flex-1">
                 <div className={`w-11 h-11 rounded-2xl flex items-center justify-center text-xl transition-all ${
                   m.achieved ? 'bg-amber-50 shadow-sm shadow-amber-200 scale-105' : 'bg-gray-50 opacity-30 grayscale'}`}>
@@ -134,15 +174,13 @@ export default function ImpactPage() {
 
         {/* Summary banner */}
         <div className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-[#0f3528] to-[#1B4D3E] p-5 text-white">
-          <div className="absolute inset-0 opacity-5" style={{backgroundImage:'radial-gradient(circle, white 1px, transparent 1px)', backgroundSize:'24px 24px'}} />
-          <p className="font-display font-bold text-sm mb-3 text-green-200">🌿 Your Eco Summary</p>
+          <div className="absolute inset-0 opacity-5" style={{ backgroundImage: 'radial-gradient(circle, white 1px, transparent 1px)', backgroundSize: '24px 24px' }} />
+          <div className="flex items-center gap-2 mb-3">
+            <LeafWrapLogo size={24} />
+            <p className="font-display font-bold text-sm text-green-200">Eco Summary</p>
+          </div>
           <div className="grid grid-cols-2 gap-3 text-center relative">
-            {[
-              [packagesScanned, 'Packages Scanned'],
-              [plantsGrown,     'Plants Nurtured'],
-              [ecoCredits,      'Eco Credits'],
-              [`${co2Saved}kg`, 'CO₂ Offset'],
-            ].map(([val, label]) => (
+            {[[packagesScanned,'Packages Scanned'],[plantsGrown,'Plants Nurtured'],[ecoCredits,'Eco Credits'],[`${co2Saved}kg`,'CO₂ Offset']].map(([val, label]) => (
               <div key={label} className="bg-white/10 rounded-2xl p-3">
                 <p className="font-display font-black text-2xl">{val}</p>
                 <p className="text-xs text-green-200 font-medium">{label}</p>

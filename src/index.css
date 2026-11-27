@@ -10,17 +10,165 @@
   ::selection { @apply bg-green-200 text-[#1B4D3E]; }
 }
 
+/* ─────────────────────────── 3D SCENE ─────────────────────────── */
+
+/* Perspective container */
+.scene-3d {
+  perspective: 600px;
+  perspective-origin: 50% 40%;
+}
+
+/* ── Floating 3D Leaf ── */
+.leaf-3d-wrapper {
+  transform-style: preserve-3d;
+  animation: leafFloat3D 7s ease-in-out infinite;
+  filter: drop-shadow(0 20px 30px rgba(27,77,62,0.35));
+}
+@keyframes leafFloat3D {
+  0%   { transform: rotateX(12deg) rotateY(-15deg) rotateZ(2deg) translateY(0px); }
+  25%  { transform: rotateX(5deg)  rotateY(10deg)  rotateZ(-3deg) translateY(-8px); }
+  50%  { transform: rotateX(-8deg) rotateY(20deg)  rotateZ(4deg)  translateY(-14px); }
+  75%  { transform: rotateX(8deg)  rotateY(-8deg)  rotateZ(-2deg) translateY(-6px); }
+  100% { transform: rotateX(12deg) rotateY(-15deg) rotateZ(2deg)  translateY(0px); }
+}
+
+/* ── CSS 3D Box (Scan page) ── */
+.cube-scene {
+  perspective: 500px;
+}
+.cube {
+  width: 90px;
+  height: 90px;
+  position: relative;
+  transform-style: preserve-3d;
+  animation: spinCube 8s linear infinite;
+}
+@keyframes spinCube {
+  0%   { transform: rotateX(-20deg) rotateY(0deg); }
+  100% { transform: rotateX(-20deg) rotateY(360deg); }
+}
+.cube .face {
+  position: absolute;
+  width: 90px;
+  height: 90px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 28px;
+  border: 1.5px solid rgba(255,255,255,0.3);
+  backdrop-filter: blur(2px);
+}
+.cube .front  { background: rgba(27,77,62,0.90); transform: translateZ(45px); }
+.cube .back   { background: rgba(21,61,49,0.85); transform: rotateY(180deg) translateZ(45px); }
+.cube .left   { background: rgba(45,106,79,0.80); transform: rotateY(-90deg) translateZ(45px); }
+.cube .right  { background: rgba(20,83,45,0.80); transform: rotateY(90deg)  translateZ(45px); }
+.cube .top    { background: rgba(74,160,106,0.75); transform: rotateX(90deg)  translateZ(45px); }
+.cube .bottom { background: rgba(16,52,36,0.75); transform: rotateX(-90deg) translateZ(45px); }
+
+/* ── 3D Earth Sphere (Impact page) ── */
+.earth-3d {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  background:
+    radial-gradient(circle at 35% 35%, #4ade80 0%, transparent 45%),
+    radial-gradient(circle at 65% 55%, #22c55e 0%, transparent 35%),
+    radial-gradient(circle at 50% 50%, #166534 30%, #15803d 60%, #14532d 100%);
+  box-shadow:
+    inset -18px -12px 30px rgba(0,0,0,0.5),
+    inset 10px 8px 20px rgba(74,222,128,0.2),
+    0 0 40px rgba(34,197,94,0.3),
+    0 20px 40px rgba(0,0,0,0.3);
+  animation: earthSpin 12s linear infinite;
+  position: relative;
+  overflow: hidden;
+}
+.earth-3d::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background: repeating-linear-gradient(
+    0deg,
+    transparent,
+    transparent 8px,
+    rgba(255,255,255,0.03) 8px,
+    rgba(255,255,255,0.03) 9px
+  );
+  animation: earthSpin 10s linear infinite reverse;
+}
+.earth-3d::after {
+  content: '';
+  position: absolute;
+  top: 8%; left: 15%;
+  width: 30%; height: 50%;
+  background: rgba(74,222,128,0.25);
+  border-radius: 40% 60% 70% 40% / 50% 40% 60% 50%;
+}
+@keyframes earthSpin {
+  from { filter: hue-rotate(0deg); }
+  to   { filter: hue-rotate(5deg); }
+}
+
+/* Atmosphere glow */
+.earth-glow {
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(74,222,128,0.15) 50%, transparent 70%);
+  position: absolute;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  animation: atmospherePulse 3s ease-in-out infinite;
+}
+@keyframes atmospherePulse {
+  0%, 100% { transform: translate(-50%,-50%) scale(1); opacity: 0.6; }
+  50%       { transform: translate(-50%,-50%) scale(1.08); opacity: 1; }
+}
+
+/* ── 3D Card tilt on hover ── */
+.card-3d {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  transform-style: preserve-3d;
+}
+.card-3d:hover {
+  transform: perspective(800px) rotateX(-3deg) rotateY(4deg) translateY(-3px) scale(1.01);
+  box-shadow: 8px 16px 32px rgba(27,77,62,0.15);
+}
+
+/* ── Orbiting particles ── */
+.orbit-ring {
+  width: 200px; height: 200px;
+  border-radius: 50%;
+  border: 1px dashed rgba(74,222,128,0.3);
+  position: absolute;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%) rotateX(70deg);
+  animation: orbitRotate 10s linear infinite;
+}
+.orbit-dot {
+  width: 8px; height: 8px;
+  background: #4ade80;
+  border-radius: 50%;
+  position: absolute;
+  top: -4px; left: 50%;
+  transform: translateX(-50%);
+  box-shadow: 0 0 8px #4ade80;
+}
+@keyframes orbitRotate {
+  from { transform: translate(-50%, -50%) rotateX(70deg) rotateZ(0deg); }
+  to   { transform: translate(-50%, -50%) rotateX(70deg) rotateZ(360deg); }
+}
+
+/* ── Utility classes ── */
 @layer utilities {
   .no-scrollbar::-webkit-scrollbar { display: none; }
   .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
   .font-display { font-family: 'Outfit', system-ui, sans-serif; }
 
-  .card {
-    @apply bg-white rounded-3xl shadow-sm border border-white/80;
-  }
-  .card-glass {
-    @apply bg-white/70 backdrop-blur-sm rounded-3xl border border-white/60 shadow-sm;
-  }
+  .card { @apply bg-white rounded-3xl shadow-sm border border-white/80; }
+  .card-glass { @apply bg-white/70 backdrop-blur-sm rounded-3xl border border-white/60 shadow-sm; }
   .btn-primary {
     @apply bg-[#1B4D3E] text-white rounded-2xl py-3.5 font-semibold text-sm
            active:scale-95 transition-all duration-150 shadow-md shadow-green-900/20;
@@ -29,41 +177,23 @@
     @apply bg-green-50 text-[#1B4D3E] rounded-2xl py-3 font-semibold text-sm
            active:scale-95 transition-all duration-150 border border-green-100;
   }
-  .badge {
-    @apply text-[10px] font-semibold px-2 py-0.5 rounded-full;
-  }
-  .section-title {
-    @apply font-display font-bold text-base text-[#132E25] mb-3;
-  }
+  .badge { @apply text-[10px] font-semibold px-2 py-0.5 rounded-full; }
+  .section-title { @apply font-display font-bold text-base text-[#132E25] mb-3; }
 
-  /* Smooth page transitions */
+  /* Page animations */
   .page-enter { animation: pageEnter 0.35s ease-out; }
   @keyframes pageEnter {
     from { opacity: 0; transform: translateY(12px); }
     to   { opacity: 1; transform: translateY(0); }
   }
 
-  /* Shimmer for loading states */
-  .shimmer {
-    background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
-    background-size: 200% 100%;
-    animation: shimmer 1.5s infinite;
-  }
-  @keyframes shimmer {
-    0%   { background-position: 200% 0; }
-    100% { background-position: -200% 0; }
-  }
-
   /* Pulse ring */
-  .pulse-ring {
-    animation: pulseRing 2s cubic-bezier(0.455, 0.03, 0.515, 0.955) infinite;
-  }
+  .pulse-ring { animation: pulseRing 2s cubic-bezier(0.455,0.03,0.515,0.955) infinite; }
   @keyframes pulseRing {
     0%   { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(76,175,80,0.4); }
     70%  { transform: scale(1);    box-shadow: 0 0 0 10px rgba(76,175,80,0); }
     100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(76,175,80,0); }
   }
 
-  /* Number counter animation */
   .stat-number { font-variant-numeric: tabular-nums; }
 }
