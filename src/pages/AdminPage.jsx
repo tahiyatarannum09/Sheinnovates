@@ -1,5 +1,5 @@
 import { useMemo, useState } from 'react'
-import { useSearchParams } from 'react-router-dom'
+import { useSearchParams, Link } from 'react-router-dom'
 import {
   AlertCircle,
   CheckCircle2,
@@ -11,6 +11,8 @@ import {
   ShieldCheck,
   Trash2,
   X,
+  ArrowRight,
+  QrCode,
 } from 'lucide-react'
 import AgriLoopLogo from '../components/ui/AgriLoopLogo'
 import UserProfileBar from '../components/auth/UserProfileBar'
@@ -201,7 +203,7 @@ export default function AdminPage() {
       </div>
 
       {/* Sub-navigation tabs */}
-      <div className="px-4 -mt-3 relative z-10">
+      <div className="px-4 -mt-3 relative z-10 space-y-2">
         <div className="card p-1 flex gap-1">
           {[
             ['overview', 'Overview'],
@@ -221,6 +223,18 @@ export default function AdminPage() {
             </button>
           ))}
         </div>
+
+        {/* Quick jump to Consumer QR scan experience */}
+        <Link
+          to="/scan"
+          className="flex items-center justify-between p-2.5 rounded-2xl bg-emerald-50 hover:bg-emerald-100 border border-emerald-200 text-xs font-bold text-[#1B4D3E] transition-colors"
+        >
+          <div className="flex items-center gap-2">
+            <QrCode size={15} className="text-emerald-700" />
+            <span>Switch to Consumer Packaging QR Scanner</span>
+          </div>
+          <ArrowRight size={14} className="text-emerald-700" />
+        </Link>
       </div>
 
       <div className="px-4 mt-4 space-y-4">
